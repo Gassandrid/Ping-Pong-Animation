@@ -95,7 +95,19 @@ def move_balls():
 # Collision handling with the blocks, and color changing
 def handle_collisions():
     for block in blocks:
-        if block.rect.collidepoint(ball1_pos):
+        # ball 1
+        # adjusting to calculate from the edge of the ball, and not the center
+        top_edge = ball1_pos[1] - BALL1_RADIUS
+        bottom_edge = ball1_pos[1] + BALL1_RADIUS
+        left_edge = ball1_pos[0] - BALL1_RADIUS
+        right_edge = ball1_pos[0] + BALL1_RADIUS
+
+        if (
+            block.rect.collidepoint(left_edge, top_edge)
+            or block.rect.collidepoint(left_edge, bottom_edge)
+            or block.rect.collidepoint(right_edge, top_edge)
+            or block.rect.collidepoint(right_edge, bottom_edge)
+        ):
             if block.color != BALL2_COLOR:
                 block.color = BALL2_COLOR
                 overlap_x = BALL1_RADIUS - abs(ball1_pos[0] - block.rect.centerx)
@@ -106,7 +118,19 @@ def handle_collisions():
                     ball1_speed[1] = -ball1_speed[1]
                 break
 
-        if block.rect.collidepoint(ball2_pos):
+        # ball 2
+        # adjusting to calculate from the edge of the ball, and not the center
+        top_edge = ball2_pos[1] - BALL2_RADIUS
+        bottom_edge = ball2_pos[1] + BALL2_RADIUS
+        left_edge = ball2_pos[0] - BALL2_RADIUS
+        right_edge = ball2_pos[0] + BALL2_RADIUS
+
+        if (
+            block.rect.collidepoint(left_edge, top_edge)
+            or block.rect.collidepoint(left_edge, bottom_edge)
+            or block.rect.collidepoint(right_edge, top_edge)
+            or block.rect.collidepoint(right_edge, bottom_edge)
+        ):
             if block.color != BALL1_COLOR:
                 block.color = BALL1_COLOR
                 overlap_x = BALL2_RADIUS - abs(ball2_pos[0] - block.rect.centerx)
